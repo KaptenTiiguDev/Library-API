@@ -130,10 +130,11 @@ class BookIssueModel(db.Model):
 
     @staticmethod
     def is_book_issued(book_id):
-        # TODO test
-        return BookIssueModel.query.filter(BookIssueModel.is_active==True) \
-                                   .filter(BookIssueModel.book_id==book.id
-                                   )
+        if BookIssueModel.query.filter(BookIssueModel.is_active==True) \
+              .filter(BookIssueModel.book_id==book_id) \
+              .first():
+            return True
+        return False
 
     def __repr__(self):
         return "<id {}>".format(self.id)
