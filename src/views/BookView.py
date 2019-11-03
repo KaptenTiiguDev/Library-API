@@ -63,8 +63,6 @@ def delete(book_id):
     book = BookModel.get_one_book(book_id)
     if not book:
         return custom_response({"error": "book not found"}, 404)
-
-    # TODO implement and test if issued
     if not BookIssueModel.is_book_issued(book_id):
         book.delete()
         return custom_response({"message": "deleted"}, 204)
@@ -78,12 +76,19 @@ def create_new_issue():
     if not has_role_required(g, ["Librarian"]):
         return custom_response({"error": "Authorization Required"}, 401)
 
-    # TODO add check if issued
-    # if BookIssueModel.is_book_issued(book_id):
-    #     return custom_response({"error": "The book is already issued"}, 400)
-
     req_data = request.get_json()
     data  = issue_schema.load(req_data)
+
+    book = BookModel.get_one_book(data['book_id'])
+    user = UserModel.get_one_user(data['patron_id'])
+    if not book:
+        return custom_response({"error": "book not found"}, 404)
+    if not user:
+        return custom_response({"error": "user not found"}, 404)
+
+    if BookIssueModel.is_book_issued(data['book_id']):
+        return custom_response({"error": "The book is already issued"}, 400)
+
     issue = BookIssueModel(data)
     issue.save()
     ser_data = issue_schema.dump(issue)
