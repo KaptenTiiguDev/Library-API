@@ -13,6 +13,8 @@ from .models.UserModel import UserModel, UserSchema, Role, UserRoles
 from .models.BookModel import BookModel
 from .models.BookModel import BookIssueModel
 
+import logging
+
 def create_app(env_name):
     """Create an app"""
 
@@ -75,6 +77,7 @@ def create_app(env_name):
     @app.route('/', methods=['GET'])
     def index():
         """Root endpoint"""
+        app.logger.info('Processing default request')
         return 'Hello world'
 
     return app

@@ -6,6 +6,7 @@ from ..models.BookModel import BookIssueModel, BookIssueSchema
 from ..shared.Authentication import Auth
 from webargs import flaskparser
 from flask_user import roles_required, UserMixin
+from flask import current_app as app
 import sys
 
 parser = flaskparser.FlaskParser()
@@ -29,6 +30,7 @@ def create():
     book = BookModel(data)
     book.save()
     ser_data = book_schema.dump(book)
+    app.logger.info(f'Book added "{book.title}" (id={book.id})')
     return custom_response(data, 201)
 
 
@@ -65,6 +67,7 @@ def delete(book_id):
         return custom_response({"error": "book not found"}, 404)
     if not BookIssueModel.is_book_issued(book_id):
         book.delete()
+        app.logger.info('Book deleted "{book.title}" (id={book.id})')
         return custom_response({"message": "deleted"}, 204)
     return custom_response({"error": "Cannot delete an issued book"}, 400)
 
@@ -92,6 +95,7 @@ def create_new_issue():
     issue = BookIssueModel(data)
     issue.save()
     ser_data = issue_schema.dump(issue)
+    app.logger.info(f'Issue created, book "{book.title}" (id={book.id}) to {user.name} (id={user.id})')
     return custom_response(data, 201)
 
 @issue_api.route("/", methods=["GET"])

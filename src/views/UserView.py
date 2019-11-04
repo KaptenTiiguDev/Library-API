@@ -4,6 +4,8 @@ from ..shared.Authentication import Auth
 from webargs import flaskparser
 from flask_user import roles_required, UserMixin
 import sys
+import logging
+from flask import current_app as app
 
 parser = flaskparser.FlaskParser()
 
@@ -44,6 +46,7 @@ def create_patron():
     user.save()
     ser_data = user_schema.dump(user)
     token = Auth.generate_token(ser_data.get("id"))
+    app.logger.info(f'Patron created ({user.name})')
     return custom_response({"jwt_token": token}, 201)
 
 
