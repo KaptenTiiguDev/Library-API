@@ -47,12 +47,11 @@ class BookModel(db.Model):
         db.session.commit()
 
     def get_max_issue_period_in_days(self):
-        # TODO test
         if (datetime.datetime.utcnow() - self.created_at).days <= BookModel.days_book_considered_new:
             return BookModel.short_issue_period_days
-        if len(BookModel.query.filter(BookModel.isbn).all()) < book_shortage_number:
-            return short_issue_period_days
-        return standard_issue_period_days
+        if len(BookModel.query.filter(BookModel.isbn==self.isbn).all()) < BookModel.book_shortage_number:
+            return BookModel.short_issue_period_days
+        return BookModel.standard_issue_period_days
 
     @staticmethod
     def get_all_books():
