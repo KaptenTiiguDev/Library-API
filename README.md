@@ -17,4 +17,5 @@ export FLASK_ENV=development
 export DATABASE_URL=postgres://name:password@host:port/library_api_db
 export JWT_SECRET_KEY=taKbWfacbbNabz7og9Oa
 ```
-* Start the app with ```python run.py```
+* Run migrations ```./manage.py db init; ./manage.py db migrate; ./manage.py db upgrade```
+* Start the app with ```./run.py```
