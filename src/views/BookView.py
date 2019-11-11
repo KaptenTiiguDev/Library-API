@@ -1,4 +1,5 @@
-from flask import request, json, Response, Blueprint, g
+# Faili nimi peaks olema book_view (PEP-8)
+# from flask import request, json, Response, Blueprint, g
 from ..models.UserModel import UserModel, UserSchema, Role
 from .UserView import has_role_required
 from ..models.BookModel import BookModel, BookSchema
@@ -9,6 +10,9 @@ from flask_user import roles_required, UserMixin
 from flask import current_app as app
 import sys
 
+'''
+Vaate loogika võiks hoida õhukesena ja äriloogikalised protsessid üle viia "service" kihti. 
+'''
 parser = flaskparser.FlaskParser()
 
 book_api = Blueprint("book_api", __name__)

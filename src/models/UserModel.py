@@ -7,6 +7,9 @@ from flask_user import roles_required, UserMixin, UserManager
 from sqlalchemy.orm import relationship
 from sqlalchemy import or_
 
+'''
+Samad kommentaarid mis BookModel.py failis
+'''
 
 class UserModel(db.Model, UserMixin):
     """User Model"""

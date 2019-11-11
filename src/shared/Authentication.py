@@ -1,3 +1,4 @@
+# Faili nimi peaks olema authentication (PEP-8)
 import jwt
 import os
 import datetime
@@ -5,6 +6,11 @@ from flask import json, Response, request, g
 from functools import wraps
 from ..models.UserModel import UserModel
 
+
+'''
+Siin failis on mitmel korral välja kutsutud Response tagastamine,kus mitmed parameetrid korduvad, et selle võiks eraldada
+eraldi meetodisse
+'''
 
 class Auth:
     """Auth Class"""

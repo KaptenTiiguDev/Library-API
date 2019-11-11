@@ -7,6 +7,11 @@ import sys
 import logging
 from flask import current_app as app
 
+
+'''
+Samad kommentaarid mis UserView.py failis
+'''
+
 parser = flaskparser.FlaskParser()
 
 user_api = Blueprint("user_api", __name__)
